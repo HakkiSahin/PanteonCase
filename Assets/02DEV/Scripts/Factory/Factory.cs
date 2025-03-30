@@ -1,6 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Factory : MonoBehaviour
 {
-    public abstract void MoveTo(Vector2 targetPosition);
+    public abstract ISoldier CreateSoldier( Vector3 position);
+    
+    
 }

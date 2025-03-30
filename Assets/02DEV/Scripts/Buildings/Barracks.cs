@@ -12,5 +12,6 @@ public class Barracks : Buildings
    {
       base.ShowInformationPanel();
       EventBus<ShowBuildingUnitEvent>.Emit(this, new ShowBuildingUnitEvent{ UnitImages = units});
+      EventBus<SetBuildPosEvent>.Emit(this, new SetBuildPosEvent{ Position = transform.position });
    }
 }
