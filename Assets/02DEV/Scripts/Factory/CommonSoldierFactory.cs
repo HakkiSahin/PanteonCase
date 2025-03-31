@@ -7,11 +7,12 @@ public class CommonSoldierFactory : Factory
     [SerializeField]private CommonSoldier commonSoldierPrefab;
     public override ISoldier CreateSoldier(Vector3 position)
     {
-        GameObject soldierInstance = Instantiate(commonSoldierPrefab.gameObject, position, Quaternion.identity);
-        CommonSoldier soldier = soldierInstance.GetComponent<CommonSoldier>();
+        // GameObject soldierInstance = Instantiate(commonSoldierPrefab.gameObject, position, Quaternion.identity);
+        GameObject soldier = ObjectPool.Instance.Get(commonSoldierPrefab.gameObject, PoolType.Soldiers, position);
+        CommonSoldier newSoldier = soldier.GetComponent<CommonSoldier>();
         
-        soldier.Initialize();
+        newSoldier.Initialize();
         
-        return soldier;
+        return newSoldier;
     }
 }

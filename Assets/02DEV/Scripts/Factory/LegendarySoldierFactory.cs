@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class LegendarySoldierFactory : Factory
 {
-    [SerializeField]private LegendarySoldier rareSoldierPrefab;
+    [SerializeField]private LegendarySoldier legendarySoldierPrefab;
     public override ISoldier CreateSoldier(Vector3 position)
     {
-        GameObject soldierInstance = Instantiate(rareSoldierPrefab.gameObject, position, Quaternion.identity);
-        LegendarySoldier soldier = soldierInstance.GetComponent<LegendarySoldier>();
+        GameObject soldier = ObjectPool.Instance.Get(legendarySoldierPrefab.gameObject, PoolType.Soldiers, position);
+        LegendarySoldier newSoldier = soldier.GetComponent<LegendarySoldier>();
         
-        soldier.Initialize();
+        newSoldier.Initialize();
         
-        return soldier;
+        return newSoldier;
     }
 }

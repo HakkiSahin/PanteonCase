@@ -11,4 +11,10 @@ public class RareSoldier : MonoBehaviour , ISoldier
     {
         Debug.Log("RareSoldier Initialize");
     }
+    
+    [ContextMenu("Dead")]
+    public void DeadSoldier()
+    {
+        ObjectPool.Instance.Return(gameObject, PoolType.Soldiers);
+    }
 }

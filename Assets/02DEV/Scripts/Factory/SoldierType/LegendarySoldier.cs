@@ -10,4 +10,10 @@ public class LegendarySoldier : MonoBehaviour,ISoldier
     {
         Debug.Log("LegendarySoldier Initialize");
     }
+
+    [ContextMenu("Dead")]
+    public void DeadSoldier()
+    {
+        ObjectPool.Instance.Return(gameObject, PoolType.Soldiers);
+    }
 }

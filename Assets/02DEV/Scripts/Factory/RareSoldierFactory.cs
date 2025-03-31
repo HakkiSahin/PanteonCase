@@ -7,11 +7,11 @@ public class RareSoldierFactory : Factory
     [SerializeField]private RareSoldier rareSoldierPrefab;
     public override ISoldier CreateSoldier(Vector3 position)
     {
-        GameObject soldierInstance = Instantiate(rareSoldierPrefab.gameObject, position, Quaternion.identity);
-        RareSoldier soldier = soldierInstance.GetComponent<RareSoldier>();
+        GameObject soldier = ObjectPool.Instance.Get(rareSoldierPrefab.gameObject, PoolType.Soldiers, position);
+        RareSoldier newSoldier = soldier.GetComponent<RareSoldier>();
         
-        soldier.Initialize();
+        newSoldier.Initialize();
         
-        return soldier;
+        return newSoldier;
     }
 }

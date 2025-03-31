@@ -15,4 +15,11 @@ public class CommonSoldier : MonoBehaviour, ISoldier
     {
         Debug.Log("Common Soldier Initialize");
     }
+    
+    
+    [ContextMenu("Dead")]
+    public void DeadSoldier()
+    {
+        ObjectPool.Instance.Return(gameObject, PoolType.Soldiers);
+    }
 }

@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: New Sprite Atlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 4d64e79e0847d4863b15fe0d227f11bb, type: 3}
+    - {fileID: 2800000, guid: 6d66fd8a5f367438ab0b0932c7eda475, type: 3}
+    - {fileID: 2800000, guid: cc1ad87f00a9348a39f5c17a8b233381, type: 3}
+    - {fileID: 2800000, guid: a5f1b6ee429f448728a101f6e9372c31, type: 3}
+    - {fileID: 2800000, guid: aad462d81e096451c82e24cf17993858, type: 3}
+    - {fileID: 2800000, guid: e11ae823660cc412eb40cd4bd97a19c8, type: 3}
+    - {fileID: 2800000, guid: ff6701dc1bf2d477bbf34fa26646bfc1, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: e11ae823660cc412eb40cd4bd97a19c8, type: 3}
+  - {fileID: 21300000, guid: aad462d81e096451c82e24cf17993858, type: 3}
+  - {fileID: 21300000, guid: 6d66fd8a5f367438ab0b0932c7eda475, type: 3}
+  - {fileID: 21300000, guid: ff6701dc1bf2d477bbf34fa26646bfc1, type: 3}
+  - {fileID: 21300000, guid: 4d64e79e0847d4863b15fe0d227f11bb, type: 3}
+  - {fileID: 21300000, guid: a5f1b6ee429f448728a101f6e9372c31, type: 3}
+  - {fileID: 21300000, guid: cc1ad87f00a9348a39f5c17a8b233381, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Red_circle
+  - Green_circle
+  - "Ads\u0131z_Resim"
+  - Red_Prickers
+  - "Ads\u0131z_Resim 1"
+  - Blue_Prickers
+  - Blue_circle
+  m_RenderDataMap: {}
+  m_Tag: New Sprite Atlas
+  m_IsVariant: 0
