@@ -10,9 +10,12 @@ public class TestScript : MonoBehaviour
     private bool isDragging = false;
     
     public GridSystem gridSystem;
-    public int objectWidth = 4; // Objenin genişliği (grid birimi)
-    public int objectHeight = 3; // Objenin yüksekliği (grid birimi)
-
+    [SerializeField] Vector2 buildSize = new Vector2(4, 2);
+    [SerializeField] SpriteRenderer buildRendere;
+    
+    [SerializeField] Barracks barracks;
+    
+    private Vector2 _currentLocation;
     void Start()
     {
         mainCamera = Camera.main;
@@ -29,8 +32,8 @@ public class TestScript : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-        myRigid  = transform.AddComponent<Rigidbody2D>();
-        myRigid.gravityScale = 0;
+            myRigid  = transform.AddComponent<Rigidbody2D>();
+            myRigid.gravityScale = 0;
             RaycastHit2D hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             if (hit.collider != null && hit.collider.gameObject == gameObject)
             {
@@ -51,16 +54,20 @@ public class TestScript : MonoBehaviour
     private void FindNearestCell()
     {
         transform.SetParent(gridSystem.transform);
-        Vector2 placementPos = gridSystem.FindNearestCell(transform.localPosition);
+        Vector2 placementPos = gridSystem.FindNearestCell(transform.localPosition , buildSize);
 
         if (placementPos.x > -1)
         {
+            barracks.enabled=true;
+            barracks.currentLocation = placementPos;
             this.enabled =false;
-            transform.localPosition = new Vector2(placementPos.x, placementPos.y);
+            
+            _currentLocation = placementPos;
+            transform.localPosition = _currentLocation;
         }
         else
         {
-            Debug.Log("Yasini s2m");
+            Debug.Log("Wrong Cell");
         }
         
     }
@@ -72,7 +79,7 @@ public class TestScript : MonoBehaviour
         if (other.CompareTag("Build") && !isStay && isDragging)
         {
             isStay = true;
-            GetComponent<SpriteRenderer>().color = Color.red; 
+            buildRendere.color = Color.red; 
         }
     }
 
@@ -81,7 +88,7 @@ public class TestScript : MonoBehaviour
         if (other.CompareTag("Build"))
         {
             isStay = false;
-            GetComponent<SpriteRenderer>().color = Color.white; 
+            buildRendere.color = Color.white; 
         }
 
     }

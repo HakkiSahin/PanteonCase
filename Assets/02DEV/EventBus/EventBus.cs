@@ -23,5 +23,10 @@ namespace EventBus
                 Listeners[i]?.Invoke(sender, @event);
             }
         }
+
+        public static void Emit(object findNearCell)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

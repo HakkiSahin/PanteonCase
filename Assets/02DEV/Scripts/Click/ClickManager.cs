@@ -13,7 +13,6 @@ public class ClickManager : MonoBehaviour
 
             if (hit.collider != null)
             {
-                Debug.Log("in here");
                 hit.collider.GetComponent<IClickable>()?.OnClick();
             }
         }

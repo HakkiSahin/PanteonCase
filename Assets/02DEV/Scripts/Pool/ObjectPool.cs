@@ -6,6 +6,8 @@ public class ObjectPool : MonoBehaviour
     public static ObjectPool Instance;
     private Dictionary<GameObject, Queue<GameObject>> pools = new();
     private Dictionary<PoolType, Transform> poolParents = new();
+
+   
     private void Awake()
     {
         Instance = this;
@@ -15,6 +17,8 @@ public class ObjectPool : MonoBehaviour
         {
             GameObject parentObj = new GameObject(type.ToString() + "_Pool");
             poolParents[type] = parentObj.transform;
+            //parentObj.transform.SetParent(parent);
+           parentObj.transform.position = transform.position;
         }
     }
 
@@ -26,7 +30,6 @@ public class ObjectPool : MonoBehaviour
         {
             foreach (Transform child in parent)
             {
-                Debug.Log(child.name.Contains(prefab.name) +"&&"+ child.gameObject.activeSelf);
                 if (child.name.Contains(prefab.name) && !child.gameObject.activeSelf )
                 {
                     child.gameObject.SetActive(true);

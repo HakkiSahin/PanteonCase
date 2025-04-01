@@ -6,3 +6,7 @@ public struct SetBuildPosEvent
 {
    public Vector3 Position;
 }
+
+public struct FindNearCellEvent{
+      public Vector2 Location;
+}
