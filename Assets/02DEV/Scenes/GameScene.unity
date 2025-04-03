@@ -228,6 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   legendarySoldierPrefab: {fileID: 458800337853883226, guid: 39f42703dfa784ccdba936bb9dcb8de2, type: 3}
+  gridSystem: {fileID: 2085646907}
 --- !u!1 &156993019
 GameObject:
   m_ObjectHideFlags: 0
@@ -1202,6 +1203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rareSoldierPrefab: {fileID: 4969718360453456813, guid: c74d2743d481f406c823635b71711b52, type: 3}
+  gridSystem: {fileID: 2085646907}
 --- !u!1 &731841310
 GameObject:
   m_ObjectHideFlags: 0
@@ -1955,6 +1957,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   commonSoldierPrefab: {fileID: 2405023531736261927, guid: 8e8778005c2ee4ed2bf921405063a9c0, type: 3}
+  gridSystem: {fileID: 2085646907}
 --- !u!1 &1117878345
 GameObject:
   m_ObjectHideFlags: 0
