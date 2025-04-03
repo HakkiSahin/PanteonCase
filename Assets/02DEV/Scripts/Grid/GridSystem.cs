@@ -9,22 +9,19 @@ public struct GridCells
     public Vector3 position;
     public bool isFull;
     public Transform cellTransform;
-    
-    public Vector3 GetWorldPosition(Transform cellTransform)
-    {
-        // Grid objesinin transform'unu kullanarak yerel pozisyonu dünya pozisyonuna dönüştür.
-        return cellTransform.TransformPoint(this.position);
-    }
 }
+
 public class GridSystem : MonoBehaviour
 {
     public int columns = 20;
     public int rows = 30;
     public float cellSize = 0.32f;
-    public float cellSizex = 0.33f;
+    
+    private static float _cellSizex = 0.33f;
     public Sprite sprite;
-    private GridCells[,] gridCells;
-
+    public GridCells[,] GridCells;
+    
+    public Pathfinding Pathfinder;
     private void OnEnable()
     {
         EventBus<FindNearCellEvent>.AddListener(NearCellForSoldier);
@@ -37,10 +34,14 @@ public class GridSystem : MonoBehaviour
 
     void Start()
     {
-        gridCells = new GridCells[columns, rows];
+        GridCells = new GridCells[columns, rows];
         DrawGrid();
+        Pathfinder = new Pathfinding(GridCells, columns, rows);
+        
     }
-
+    
+    
+    
 
     void DrawGrid()
     {
@@ -48,10 +49,10 @@ public class GridSystem : MonoBehaviour
         {
             for (int y = 0; y < rows; y++)
             {
-                Vector2 position = new Vector2(x * cellSizex, y * cellSizex);
+                Vector2 position = new Vector2(x * _cellSizex, y * _cellSizex);
                 Transform newTransform = DrawCell(position);
-                gridCells[x, y] = new GridCells { position = position, isFull = false };
-                gridCells[x, y].cellTransform = newTransform;
+                GridCells[x, y] = new GridCells { position = position, isFull = false };
+                GridCells[x, y].cellTransform = newTransform;
             }
         }
     }
@@ -62,73 +63,74 @@ public class GridSystem : MonoBehaviour
         cell.transform.SetParent(this.transform);
         cell.transform.localPosition = position;
         cell.transform.localScale = Vector3.one * cellSize;
-        
-        
+
+
         SpriteRenderer renderer = cell.AddComponent<SpriteRenderer>();
         renderer.sprite = sprite;
         renderer.color = new Color(1, 1, 1, 0.3f);
-        
+
         return cell.transform;
     }
 
 
     public Vector2 FindNearestCell(Vector2 position, Vector2 size)
     {
-        // Pozisyonu grid index'ine çevir
-        Vector2 cellIdx = (position )  / cellSize ;
+        
 
         // FloorToInt kullanarak indeks al
-        Vector2Int cellIdxInt = new Vector2Int(Mathf.FloorToInt(cellIdx.x), Mathf.FloorToInt(cellIdx.y));
-
+        Vector2Int cellIdxInt = PositionToCellIndex(position);
+        
         // Clamp ile sınırları aşmasını engelle
         cellIdxInt.x = Mathf.Clamp(cellIdxInt.x, 0, columns - 1);
         cellIdxInt.y = Mathf.Clamp(cellIdxInt.y, 0, rows - 1);
 
-        Debug.Log($"Hücre Index: {cellIdxInt} - Pozisyon: {gridCells[cellIdxInt.x, cellIdxInt.y].position}");
+        Debug.Log($"Hücre Index: {cellIdxInt} - Pozisyon: {GridCells[cellIdxInt.x, cellIdxInt.y].position}");
 
-        
-        for (int x = cellIdxInt.x; x < cellIdxInt.x+ size.x; x++)
+
+        for (int x = cellIdxInt.x; x < cellIdxInt.x + size.x; x++)
         {
-            for (int y = cellIdxInt.y; y < cellIdxInt.y+ size.y; y++)
+            for (int y = cellIdxInt.y; y < cellIdxInt.y + size.y; y++)
             {
-                if (gridCells[x, y].isFull)
+                if (GridCells[x, y].isFull)
                 {
                     Debug.Log($"{x},{y} bu satirlar doludur");
-                    return Vector2.one*-1;
+                    return Vector2.one * -1;
                 }
             }
         }
 
-            CellStateChange(cellIdxInt,size,true);
-            return gridCells[cellIdxInt.x, cellIdxInt.y].position;
+        CellStateChange(cellIdxInt, size, true);
+        return GridCells[cellIdxInt.x, cellIdxInt.y].position;
+    }
+
+    public static  Vector2Int  PositionToCellIndex(Vector2 position)
+    {
         
+        Vector2 cellIdx = (position) / _cellSizex;
+        Vector2Int cellIdxInt = new Vector2Int(Mathf.FloorToInt(cellIdx.x), Mathf.FloorToInt(cellIdx.y));
+        return cellIdxInt;
     }
 
     void CellStateChange(Vector2Int startGridPos, Vector2 endGridPos, bool state)
     {
-        for (int x = startGridPos.x; x < startGridPos.x+ endGridPos.x; x++)
+        for (int x = startGridPos.x; x < startGridPos.x + endGridPos.x; x++)
         {
-            for (int y = startGridPos.y; y < startGridPos.y+ endGridPos.y; y++)
+            for (int y = startGridPos.y; y < startGridPos.y + endGridPos.y; y++)
             {
-                gridCells[x, y].isFull = state;
+                GridCells[x, y].isFull = state;
             }
         }
     }
-    
-    
+
+
     private void NearCellForSoldier(object sender, FindNearCellEvent e)
     {
-
-        Vector2 cellIdx = (e.Location )  / cellSizex ;
-        
-        Vector2Int cellIdxInt = new Vector2Int(Mathf.FloorToInt(cellIdx.x), Mathf.FloorToInt(cellIdx.y));
-        
-        BFSFindEmptySpace(cellIdxInt);
-     
+        Vector2Int cellIdxInt = PositionToCellIndex(e.Location);
+        BfsFindEmptySpace(cellIdxInt);
     }
-    
-        
-    private void BFSFindEmptySpace(Vector2Int start)
+
+
+    private void BfsFindEmptySpace(Vector2Int start)
     {
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
         HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
@@ -155,21 +157,26 @@ public class GridSystem : MonoBehaviour
                         visited.Add(newPos);
                         queue.Enqueue(newPos);
 
-                        if (!gridCells[newX, newY].isFull) // Yeni pozisyonda alan boşsa
+                        if (!GridCells[newX, newY].isFull) // Yeni pozisyonda alan boşsa
                         {
-                            Debug.Log(gridCells[newX, newY].position);
-                            EventBus<SetNearestCellEvent>.Emit(this, new SetNearestCellEvent{ SpawnPosition =  gridCells[newX, newY].cellTransform.position });
-                            gridCells[newX, newY].isFull = true;
-                            return; 
+                            Debug.Log(GridCells[newX, newY].position);
+                            EventBus<SetNearestCellEvent>.Emit(this,
+                                new SetNearestCellEvent
+                                {
+                                    SpawnPosition = GridCells[newX, newY].cellTransform.position,
+                                    CellIndex = new Vector2Int(newX, newY)
+                                });
+                            GridCells[newX, newY].isFull = true;
+                            return;
                         }
                     }
                 }
             }
         }
 
-        Debug.Log("fuck yasin");// Eğer hiçbir uygun yer bulunmazsa
+        Debug.Log("fuck yasin"); // Eğer hiçbir uygun yer bulunmazsa
     }
-   
-    }
-  
 
+    //------ path finding
+   
+}

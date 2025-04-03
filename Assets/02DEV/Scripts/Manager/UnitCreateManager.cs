@@ -7,6 +7,7 @@ using UnityEngine;
 public class UnitCreateManager : MonoBehaviour
 {
     private Vector3 _buildPosition;
+    private Vector2Int _currentIndex;
     private void OnEnable()
     {
         EventBus<SetBuildPosEvent>.AddListener(BuildPos);
@@ -46,12 +47,13 @@ public class UnitCreateManager : MonoBehaviour
             
         }
         
-        _factory.CreateSoldier(_buildPosition);
+        _factory.CreateSoldier(_buildPosition , _currentIndex);
     }
     
     private void SetSpawnPosition(object sender, SetNearestCellEvent e)
     {
-        _buildPosition = e.SpawnPosition; 
+        _buildPosition = e.SpawnPosition;
+        _currentIndex = e.CellIndex;
     }
 }
 

@@ -1,9 +1,15 @@
 
+    using UnityEngine;
+
     public interface ISoldier
     {
         public string SoldierName { get; set; }
         
-        public void Initialize();
+        public void Initialize(GridSystem grid);
+        
+        public Vector2Int CurrentPos  { get; set; }
+        
+        public Pathfinding Pathfinding { get; set; }
     }
 
     public enum SoldierType

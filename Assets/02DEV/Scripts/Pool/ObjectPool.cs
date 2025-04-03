@@ -41,8 +41,8 @@ public class ObjectPool : MonoBehaviour
         
 
         
-        GameObject newObj = Instantiate(prefab,pos, Quaternion.identity , parent);
-        return newObj;
+        GameObject newSoldier = Instantiate(prefab,pos, Quaternion.identity , parent);
+        return newSoldier;
     }
     
     

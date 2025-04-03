@@ -22,5 +22,6 @@ public struct GetNearestCellEvent
 public struct SetNearestCellEvent
 {
     public Vector2 SpawnPosition;
+    public Vector2Int CellIndex;
 
 }
