@@ -23,7 +23,7 @@ public class test : MonoBehaviour
        Vector2Int targetPos = new Vector2Int(14, 14);
 
        // Yol bul
-       List<GridCells> path = pathfinding.FindPath(startPos, targetPos);
+       List<Cell> path = pathfinding.FindPath(startPos, targetPos);
 
        if (path != null)
        {
@@ -35,11 +35,11 @@ public class test : MonoBehaviour
        }
    }
 
-   IEnumerator MoveAlongPath(Transform unit, List<GridCells> path, float speed)
+   IEnumerator MoveAlongPath(Transform unit, List<Cell> path, float speed)
    {
-       foreach (GridCells step in path)
+       foreach (Cell step in path)
        {
-           Vector3 targetPosition = step.cellTransform.position; // GridCell'in world position'ı
+           Vector3 targetPosition = step.transform.position; // GridCell'in world position'ı
         
            while (Vector3.Distance(unit.position, targetPosition) > 0.1f) // Hedefe yaklaşana kadar hareket et
            {

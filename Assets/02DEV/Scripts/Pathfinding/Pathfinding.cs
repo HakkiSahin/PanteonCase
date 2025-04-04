@@ -33,7 +33,7 @@ public class Pathfinding
     
     
     
-    private GridCells[,] grid;
+    private Cell[,] grid;
     private int gridWidth, gridHeight;
 
     private Vector2Int[] directions = new Vector2Int[]
@@ -42,16 +42,16 @@ public class Pathfinding
         new Vector2Int(1, 1), new Vector2Int(1, -1), new Vector2Int(-1, 1), new Vector2Int(-1, -1)
     };
 
-    public Pathfinding(GridCells[,] grid, int width, int height)
+    public Pathfinding(Cell[,] grid, int width, int height)
     {
         this.grid = grid;
         this.gridWidth = width;
         this.gridHeight = height;
     }
 
-    public List<GridCells> FindPath(Vector2Int start, Vector2Int target)
+    public List<Cell> FindPath(Vector2Int start, Vector2Int target)
     {
-        if (grid[target.x, target.y].isFull) return null;
+        if (grid[target.x, target.y].GetFull()) return null;
 
         SortedList<float, Queue<Vector2Int>> openSet = new SortedList<float, Queue<Vector2Int>>();
         HashSet<Vector2Int> closedSet = new HashSet<Vector2Int>();
@@ -76,7 +76,7 @@ public class Pathfinding
             {
                 Vector2Int neighbor = current + direction;
 
-                if (!IsInBounds(neighbor) || grid[neighbor.x, neighbor.y].isFull || closedSet.Contains(neighbor))
+                if (!IsInBounds(neighbor) || grid[neighbor.x, neighbor.y].GetFull() || closedSet.Contains(neighbor))
                     continue;
 
                 float tentativeGScore = gScore[current] + Vector2.Distance(current, neighbor);
@@ -94,9 +94,9 @@ public class Pathfinding
         return null;
     }
 
-    private List<GridCells> ReconstructPath(Dictionary<Vector2Int, Vector2Int> cameFrom, Vector2Int current)
+    private List<Cell> ReconstructPath(Dictionary<Vector2Int, Vector2Int> cameFrom, Vector2Int current)
     {
-        List<GridCells> path = new List<GridCells>();
+        List<Cell> path = new List<Cell>();
 
         while (cameFrom.ContainsKey(current))
         {

@@ -10,6 +10,8 @@
         public Vector2Int CurrentPos  { get; set; }
         
         public Pathfinding Pathfinding { get; set; }
+
+        public void MovePosition(Vector2Int pos);
     }
 
     public enum SoldierType

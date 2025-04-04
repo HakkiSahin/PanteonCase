@@ -18,10 +18,10 @@ public class GridSystem : MonoBehaviour
     public float cellSize = 0.32f;
     
     private static float _cellSizex = 0.33f;
-    public Sprite sprite;
-    public GridCells[,] GridCells;
+   
+    public Cell[,] GridCells;
+    [SerializeField] GameObject cellPrefab;
     
-    public Pathfinding Pathfinder;
     private void OnEnable()
     {
         EventBus<FindNearCellEvent>.AddListener(NearCellForSoldier);
@@ -34,10 +34,9 @@ public class GridSystem : MonoBehaviour
 
     void Start()
     {
-        GridCells = new GridCells[columns, rows];
+        GridCells = new Cell[columns, rows];
         DrawGrid();
-        Pathfinder = new Pathfinding(GridCells, columns, rows);
-        
+      
     }
     
     
@@ -50,48 +49,39 @@ public class GridSystem : MonoBehaviour
             for (int y = 0; y < rows; y++)
             {
                 Vector2 position = new Vector2(x * _cellSizex, y * _cellSizex);
-                Transform newTransform = DrawCell(position);
-                GridCells[x, y] = new GridCells { position = position, isFull = false };
-                GridCells[x, y].cellTransform = newTransform;
+                GridCells[x, y] = DrawCell(position);
             }
         }
     }
 
-    Transform DrawCell(Vector2 position)
+   private Cell DrawCell(Vector2 position)
     {
-        GameObject cell = new GameObject("Cell");
-        cell.transform.SetParent(this.transform);
+        Cell cell = Instantiate(cellPrefab, transform,true).GetComponent<Cell>();
         cell.transform.localPosition = position;
         cell.transform.localScale = Vector3.one * cellSize;
-
-
-        SpriteRenderer renderer = cell.AddComponent<SpriteRenderer>();
-        renderer.sprite = sprite;
-        renderer.color = new Color(1, 1, 1, 0.3f);
-
-        return cell.transform;
+        cell.SetIndex(PositionToCellIndex(position));
+        cell.SetIsFull(false);
+        return cell;
     }
 
 
     public Vector2 FindNearestCell(Vector2 position, Vector2 size)
-    {
-        
-
-        // FloorToInt kullanarak indeks al
+    {  // FloorToInt kullanarak indeks al
         Vector2Int cellIdxInt = PositionToCellIndex(position);
         
         // Clamp ile sınırları aşmasını engelle
         cellIdxInt.x = Mathf.Clamp(cellIdxInt.x, 0, columns - 1);
         cellIdxInt.y = Mathf.Clamp(cellIdxInt.y, 0, rows - 1);
 
-        Debug.Log($"Hücre Index: {cellIdxInt} - Pozisyon: {GridCells[cellIdxInt.x, cellIdxInt.y].position}");
+     //   Debug.Log($"Hücre Index: {cellIdxInt} - Pozisyon: {GridCells[cellIdxInt.x, cellIdxInt.y].GetIndex()}");
 
 
         for (int x = cellIdxInt.x; x < cellIdxInt.x + size.x; x++)
         {
             for (int y = cellIdxInt.y; y < cellIdxInt.y + size.y; y++)
             {
-                if (GridCells[x, y].isFull)
+                Debug.Log(x + "  " + y);
+                if (GridCells[x, y].GetFull())
                 {
                     Debug.Log($"{x},{y} bu satirlar doludur");
                     return Vector2.one * -1;
@@ -100,10 +90,10 @@ public class GridSystem : MonoBehaviour
         }
 
         CellStateChange(cellIdxInt, size, true);
-        return GridCells[cellIdxInt.x, cellIdxInt.y].position;
+        return GridCells[cellIdxInt.x, cellIdxInt.y].transform.localPosition;
     }
 
-    public static  Vector2Int  PositionToCellIndex(Vector2 position)
+    private Vector2Int  PositionToCellIndex(Vector2 position)
     {
         
         Vector2 cellIdx = (position) / _cellSizex;
@@ -117,7 +107,7 @@ public class GridSystem : MonoBehaviour
         {
             for (int y = startGridPos.y; y < startGridPos.y + endGridPos.y; y++)
             {
-                GridCells[x, y].isFull = state;
+                GridCells[x, y].SetIsFull(state);
             }
         }
     }
@@ -157,16 +147,16 @@ public class GridSystem : MonoBehaviour
                         visited.Add(newPos);
                         queue.Enqueue(newPos);
 
-                        if (!GridCells[newX, newY].isFull) // Yeni pozisyonda alan boşsa
+                        if (!GridCells[newX, newY].GetFull()) // Yeni pozisyonda alan boşsa
                         {
-                            Debug.Log(GridCells[newX, newY].position);
+                           // Debug.Log(GridCells[newX, newY].position);
                             EventBus<SetNearestCellEvent>.Emit(this,
                                 new SetNearestCellEvent
                                 {
-                                    SpawnPosition = GridCells[newX, newY].cellTransform.position,
+                                    SpawnPosition = GridCells[newX, newY].transform.position,
                                     CellIndex = new Vector2Int(newX, newY)
                                 });
-                            GridCells[newX, newY].isFull = true;
+                            GridCells[newX, newY].SetIsFull(true);
                             return;
                         }
                     }

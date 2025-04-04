@@ -3332,7 +3332,7 @@ MonoBehaviour:
   columns: 16
   rows: 16
   cellSize: 0.32
-  sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  cellPrefab: {fileID: 9149600634742565214, guid: ab5793e43b9b26646916d96c74deaed6, type: 3}
 --- !u!4 &2085646908
 Transform:
   m_ObjectHideFlags: 0
