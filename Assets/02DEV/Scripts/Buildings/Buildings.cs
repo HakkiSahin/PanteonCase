@@ -10,6 +10,7 @@ public class Buildings : MonoBehaviour,IClickable
       public string buildingName;
       public Sprite buildingImage;
       public bool  isPlaced;
+      public Vector2 currentLocation;
       private void Start()
       {
          this.enabled =false;

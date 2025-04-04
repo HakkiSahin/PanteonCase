@@ -9,7 +9,7 @@ public class Barracks : Buildings
 {
    [SerializeField] private List<Sprite> units  = new();
    [SerializeField] private TestScript testScript;
-   public Vector2 currentLocation;
+   
    private void OnEnable()
    {
        EventBus<GetNearestCellEvent>.AddListener(GetNearestCell);

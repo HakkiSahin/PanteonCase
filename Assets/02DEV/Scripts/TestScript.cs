@@ -13,7 +13,7 @@ public class TestScript : MonoBehaviour
     [SerializeField] Vector2 buildSize = new Vector2(4, 2);
     [SerializeField] SpriteRenderer buildRendere;
     
-    [SerializeField] Barracks barracks;
+    [SerializeField] Buildings buildings;
     
     private Vector2 _currentLocation;
     void Start()
@@ -58,8 +58,8 @@ public class TestScript : MonoBehaviour
 
         if (placementPos.x > -1)
         {
-            barracks.enabled=true;
-            barracks.currentLocation = placementPos;
+            buildings.enabled=true;
+            buildings.currentLocation = placementPos;
             this.enabled =false;
             
             _currentLocation = placementPos;

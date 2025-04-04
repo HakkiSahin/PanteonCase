@@ -1,0 +1,164 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8318148964326753073
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1298992163, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298992163, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298992163, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.176
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298992163, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1298992164, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4d64e79e0847d4863b15fe0d227f11bb, type: 3}
+    - target: {fileID: 1615412805, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: barracks
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615412805, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: buildings
+      value: 
+      objectReference: {fileID: 8792940635060138638}
+    - target: {fileID: 1615412805, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: gridSystem
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615412805, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: buildSize.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615412805, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: buildSize.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3332863593459590892, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3332863593459590892, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.595
+      objectReference: {fileID: 0}
+    - target: {fileID: 3332863593459590892, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.297
+      objectReference: {fileID: 0}
+    - target: {fileID: 3332863593459590892, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3332863593459590892, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3332863593459590892, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3332863593459590892, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3332863593459590892, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3332863593459590892, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3332863593459590892, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3332863593459590892, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3845547642395763771, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_Size.x
+      value: 0.70918536
+      objectReference: {fileID: 0}
+    - target: {fileID: 3845547642395763771, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_Size.y
+      value: 1.0091833
+      objectReference: {fileID: 0}
+    - target: {fileID: 3845547642395763771, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.188712
+      objectReference: {fileID: 0}
+    - target: {fileID: 3845547642395763771, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.31959158
+      objectReference: {fileID: 0}
+    - target: {fileID: 5995804810059790950, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_Name
+      value: PowerPlant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5995804810059790950, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166914957807973016, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7166914957807973016, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: testScript
+      value: 
+      objectReference: {fileID: 8318148963785244020}
+    - target: {fileID: 7166914957807973016, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+      propertyPath: buildingImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 4d64e79e0847d4863b15fe0d227f11bb, type: 3}
+    m_RemovedComponents:
+    - {fileID: 7166914957807973016, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+--- !u!1 &2325371282650822999 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5995804810059790950, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+  m_PrefabInstance: {fileID: 8318148964326753073}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8792940635060138638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2325371282650822999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb80172cc9ad54888afc14e0c536a68b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingName: Power Plant
+  buildingImage: {fileID: 21300000, guid: 4d64e79e0847d4863b15fe0d227f11bb, type: 3}
+  isPlaced: 0
+  currentLocation: {x: 0, y: 0}
+--- !u!114 &8318148963785244020 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1615412805, guid: 479f46f2c68474c5987f63f5a2dd77f8, type: 3}
+  m_PrefabInstance: {fileID: 8318148964326753073}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2325371282650822999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3abbde9de9414d89ab5ca6f32178809, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
