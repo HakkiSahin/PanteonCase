@@ -1,18 +1,18 @@
 
+    using System.Collections;
+    using System.Collections.Generic;
     using UnityEngine;
 
-    public interface ISoldier : IFire
+    public interface ISoldier 
     {
         public string SoldierName { get; set; }
-        
-        public int SoldierDamage { get; set; }
 
         public void OnEnemyDeath();
-        public Vector2Int CurrentPos  { get; set; }
+        public Vector2Int CurrentPos  { get; set; } // Soldier Current Grid Index
         
-        public Pathfinding Pathfinding { get; set; }
+        public Pathfinding Pathfinding { get; set; } // A* PathFinding
         
-        public HealthController HealthController { get; set; }
+        public HealthController HealthController { get; set; } // Soldier HealthController
        
         
         public void GetHit(float damage);
@@ -20,8 +20,8 @@
         public void MovePosition(Vector2Int pos);
 
         public void Fire(Vector2 targetPosition);
-        
 
+        IEnumerator MoveAlongPath(Transform unit, List<Cell> path, float speed, Vector2Int target);
     }
 
     public enum SoldierType

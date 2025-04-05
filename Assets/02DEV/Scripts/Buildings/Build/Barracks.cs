@@ -21,6 +21,7 @@ public class Barracks : Buildings
         EventBus<GetNearestCellEvent>.RemoveListener(GetNearestCell);
     }
 
+    //An extra event for buildings with objects that can be created inside
     protected override void ShowInformationPanel()
     {
         base.ShowInformationPanel();

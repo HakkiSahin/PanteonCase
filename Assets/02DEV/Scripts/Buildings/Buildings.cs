@@ -16,6 +16,7 @@ public class Buildings : MonoBehaviour,IClickable
          this.enabled =false;
       }
 
+      // Event to display the values inside the buildings in the information panel
       protected virtual void ShowInformationPanel()
       {
          ActiveBuilding.Instance.SetActiveBuilding(gameObject);

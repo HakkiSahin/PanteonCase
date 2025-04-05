@@ -5,7 +5,7 @@ using UnityEngine;
 public class CommonSoldier : MonoBehaviour, ISoldier, IClickable
 {
     public string SoldierName { get; set; }
-    public int SoldierDamage { get; set; } 
+    [SerializeField] private int soldierDamage = 2;
     [SerializeField] private float moveSpeed=5f;
 
     public Vector2Int currentIndex;
@@ -56,8 +56,24 @@ public class CommonSoldier : MonoBehaviour, ISoldier, IClickable
 
         if (bullet != null)
         {
-            bullet.Initialize(targetPosition, 5,transform);
+            bullet.Initialize(targetPosition, soldierDamage,transform);
         }
+    }
+
+    public IEnumerator MoveAlongPath(Transform unit, List<Cell> path, float speed, Vector2Int target)
+    {
+        foreach (Cell step in path)
+        {
+            Vector3 targetPosition = step.transform.position; 
+        
+            while (Vector3.Distance(unit.position, targetPosition) > 0.1f) 
+            {
+                unit.position = Vector3.MoveTowards(unit.position, targetPosition, speed * Time.deltaTime);
+                yield return null; 
+            }
+        }
+        transform.position = new Vector3(transform.position.x, transform.position.y, -1);
+        currentIndex = target;
     }
 
     [ContextMenu("Test Character")]
@@ -85,24 +101,5 @@ public class CommonSoldier : MonoBehaviour, ISoldier, IClickable
         SoldierController.Instance.SelectedSoldier(this);
     }
     
-    IEnumerator MoveAlongPath(Transform unit, List<Cell> path, float speed , Vector2Int target)
-    {
-        foreach (Cell step in path)
-        {
-            Vector3 targetPosition = step.transform.position; // GridCell'in world position'ı
-        
-            while (Vector3.Distance(unit.position, targetPosition) > 0.1f) // Hedefe yaklaşana kadar hareket et
-            {
-                unit.position = Vector3.MoveTowards(unit.position, targetPosition, speed * Time.deltaTime);
-                yield return null; // Bir sonraki frame'e geç
-            }
-        }
-        transform.position = new Vector3(transform.position.x, transform.position.y, -1);
-        currentIndex = target;
-    }
-
-    public void OnFire()
-    {
-        throw new System.NotImplementedException();
-    }
+   
 }

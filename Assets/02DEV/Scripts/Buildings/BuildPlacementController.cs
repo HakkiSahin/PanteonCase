@@ -31,7 +31,7 @@ public class BuildPlacementController : MonoBehaviour
         isDragging = true;
     }
 
-    private Rigidbody2D myRigid;
+    private Rigidbody2D _myRigid; //We add rigidbody so that the buildings do not overlap each other until they are placed in a proper position.
     void Update()
     {
         if (isDragging)
@@ -42,8 +42,8 @@ public class BuildPlacementController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            myRigid  = transform.AddComponent<Rigidbody2D>();
-            myRigid.gravityScale = 0;
+            _myRigid  = transform.AddComponent<Rigidbody2D>();
+            _myRigid.gravityScale = 0;
             RaycastHit2D hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             if (hit.collider != null && hit.collider.gameObject == gameObject)
             {
@@ -54,17 +54,18 @@ public class BuildPlacementController : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0) && isDragging)
         {
-            DestroyImmediate(myRigid);
+            DestroyImmediate(_myRigid);
             FindNearestCell();
             isDragging = false;
             
         }
     }
 
+    //After the mouse is up, it finds the nearest cell and fixes us there
     private void FindNearestCell()
     {
         transform.SetParent(_gridSystem.transform);
-        Vector2 placementPos = _gridSystem.FindNearestCell(transform.localPosition , buildSize);
+        Vector2 placementPos = _gridSystem.FindNearestCell(transform.localPosition , buildSize); //To find the closest cell position and to change the state of empty cells according to the size of the building, we send our values to the method
 
         if (placementPos.x > -1)
         {

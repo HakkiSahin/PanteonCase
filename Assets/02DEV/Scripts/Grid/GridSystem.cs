@@ -4,13 +4,6 @@ using EventBus;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public struct GridCells
-{
-    public Vector3 position;
-    public bool isFull;
-    public Transform cellTransform;
-}
-
 public class GridSystem : MonoBehaviour
 {
     public int columns = 20;
@@ -32,16 +25,13 @@ public class GridSystem : MonoBehaviour
         EventBus<FindNearCellEvent>.RemoveListener(NearCellForSoldier);
     }
 
+    
     void Start()
     {
         GridCells = new Cell[columns, rows];
         DrawGrid();
       
     }
-
-
- 
-
     void DrawGrid()
     {
         for (int x = 0; x < columns; x++)
@@ -72,10 +62,7 @@ public class GridSystem : MonoBehaviour
         // Clamp ile sınırları aşmasını engelle
         cellIdxInt.x = Mathf.Clamp(cellIdxInt.x, 0, columns - 1);
         cellIdxInt.y = Mathf.Clamp(cellIdxInt.y, 0, rows - 1);
-
-     //   Debug.Log($"Hücre Index: {cellIdxInt} - Pozisyon: {GridCells[cellIdxInt.x, cellIdxInt.y].GetIndex()}");
-
-
+        
         for (int x = cellIdxInt.x; x < cellIdxInt.x + size.x; x++)
         {
             for (int y = cellIdxInt.y; y < cellIdxInt.y + size.y; y++)
@@ -101,6 +88,7 @@ public class GridSystem : MonoBehaviour
         return cellIdxInt;
     }
 
+    //To change the statuses of the cells
     void CellStateChange(Vector2Int startGridPos, Vector2 endGridPos, bool state)
     {
         for (int x = startGridPos.x; x < startGridPos.x + endGridPos.x; x++)
@@ -112,7 +100,7 @@ public class GridSystem : MonoBehaviour
         }
     }
 
-
+    //to find the nearest empty cell for soldier
     private void NearCellForSoldier(object sender, FindNearCellEvent e)
     {
         Vector2Int cellIdxInt = PositionToCellIndex(e.Location);
@@ -120,6 +108,7 @@ public class GridSystem : MonoBehaviour
     }
 
 
+    //bfs algorithm checks the surrounding cells in a circle and returns the index when it finds the nearest suitable cell
     private void BfsFindEmptySpace(Vector2Int start)
     {
         Queue<Vector2Int> queue = new Queue<Vector2Int>();
@@ -128,28 +117,28 @@ public class GridSystem : MonoBehaviour
         queue.Enqueue(start);
         visited.Add(start);
 
-        int maxRange = Mathf.Max(columns, rows); // Genişleme mesafesi
+        int maxRange = Mathf.Max(columns, rows); // Expansion distance
 
-        for (int range = 1; range <= maxRange; range++) // Her bir mesafeyi kontrol et
+        for (int range = 1; range <= maxRange; range++) // Check each distance
         {
-            for (int dx = -range; dx <= range; dx++) // X eksenindeki hareket
+            for (int dx = -range; dx <= range; dx++) //  Movement in X and Y axis
             {
-                for (int dy = -range; dy <= range; dy++) // Y eksenindeki hareket
+                for (int dy = -range; dy <= range; dy++) 
                 {
                     int newX = start.x + dx;
                     int newY = start.y + dy;
 
                     Vector2Int newPos = new Vector2Int(newX, newY);
 
-                    // Eğer grid içinde ve ziyaret edilmemişse
+                   // If inside the grid and empty
                     if (newX >= 0 && newX < columns && newY >= 0 && newY < rows && !visited.Contains(newPos))
                     {
                         visited.Add(newPos);
                         queue.Enqueue(newPos);
 
-                        if (!GridCells[newX, newY].GetFull()) // Yeni pozisyonda alan boşsa
+                        if (!GridCells[newX, newY].GetFull()) // If the field is empty in the new position
                         {
-                           // Debug.Log(GridCells[newX, newY].position);
+                            
                             EventBus<SetNearestCellEvent>.Emit(this,
                                 new SetNearestCellEvent
                                 {
@@ -163,8 +152,6 @@ public class GridSystem : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log("fuck yasin"); // Eğer hiçbir uygun yer bulunmazsa
     }
 
     //------ path finding

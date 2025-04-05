@@ -5,7 +5,7 @@ using UnityEngine;
 public class LegendarySoldier : MonoBehaviour,ISoldier, IClickable
 {
     public string SoldierName { get; set; }
-    public int SoldierDamage { get; set; }
+    [SerializeField] private int soldierDamage = 10;
     public Vector3 startPosition;
     public Vector2Int currentIndex;
     
@@ -72,16 +72,11 @@ public class LegendarySoldier : MonoBehaviour,ISoldier, IClickable
 
         if (bullet != null)
         {
-            bullet.Initialize(targetPosition, 5,transform);
+            bullet.Initialize(targetPosition, soldierDamage,transform);
         }
     }
-    
-    public void OnEnemyDeath()
-    {
-        ObjectPool.Instance.Return(gameObject, PoolType.Soldiers);
-    }
 
-    IEnumerator MoveAlongPath(Transform unit, List<Cell> path, float speed , Vector2Int target)
+    public IEnumerator MoveAlongPath(Transform unit, List<Cell> path, float speed, Vector2Int target)
     {
         foreach (Cell step in path)
         {
@@ -97,8 +92,10 @@ public class LegendarySoldier : MonoBehaviour,ISoldier, IClickable
         currentIndex = target;
     }
 
-    public void OnFire()
+    public void OnEnemyDeath()
     {
-        throw new System.NotImplementedException();
+        ObjectPool.Instance.Return(gameObject, PoolType.Soldiers);
     }
+
+   
 }

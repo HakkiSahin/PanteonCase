@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Build Name and Build Image Set Event
 public struct ShowBuildingInfoEvent
 {
     public string BuildName;
