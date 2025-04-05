@@ -5,7 +5,7 @@ using EventBus;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class TestScript : MonoBehaviour
+public class BuildPlacementController : MonoBehaviour
 {
     private Vector3 offset;
     private Camera mainCamera;
@@ -75,6 +75,7 @@ public class TestScript : MonoBehaviour
             _currentLocation = placementPos;
             transform.localPosition = _currentLocation;
             EventBus<BuildPlacementEvent>.Emit(this.gameObject, new BuildPlacementEvent());
+            transform.position = new Vector3(transform.position.x, transform.position.y, -1);
         }
         else
         {

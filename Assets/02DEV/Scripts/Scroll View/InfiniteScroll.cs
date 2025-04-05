@@ -11,8 +11,6 @@ public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler, IS
         EventBus<BuildPlacementEvent>.AddListener(BuildPlacement);
     }
 
-   
-
     private void OnDisable()
     {
         EventBus<BuildPlacementEvent>.RemoveListener(BuildPlacement);
@@ -29,6 +27,7 @@ public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler, IS
     private bool _positiveDrag;
     private int _selectedIndex;
     private bool _isCreate;
+    
     private void Start()
     {
         scrollRect = GetComponent<ScrollRect>();
@@ -135,9 +134,8 @@ public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler, IS
         }
     }
 
-    public void SelectedGrid(int index)
+    public void SetIndex(int index)
     {
-        Debug.Log("Selected Grid");
         _isCreate = false;
         _selectedIndex = index;
     }

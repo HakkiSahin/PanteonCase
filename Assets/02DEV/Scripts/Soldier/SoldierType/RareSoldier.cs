@@ -87,7 +87,7 @@ public class RareSoldier : MonoBehaviour, ISoldier, IClickable
                 yield return null; // Bir sonraki frame'e geç
             }
         }
-
+        transform.position = new Vector3(transform.position.x, transform.position.y, -1);
         currentIndex = target;
     }
 

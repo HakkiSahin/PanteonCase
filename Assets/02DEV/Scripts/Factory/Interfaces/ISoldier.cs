@@ -8,8 +8,6 @@
         public int SoldierDamage { get; set; }
 
         public void OnEnemyDeath();
-        
-        
         public Vector2Int CurrentPos  { get; set; }
         
         public Pathfinding Pathfinding { get; set; }

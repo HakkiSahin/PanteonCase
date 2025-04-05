@@ -12,8 +12,8 @@ public class InformationPanelPresenter : MonoBehaviour
     [SerializeField] private TextMeshProUGUI buildingName;
     
     [SerializeField] List<Image> unitImages;
-
-
+    [SerializeField] GameObject menu;
+ 
     private void OnEnable()
     {
         EventBus<ShowBuildingInfoEvent>.AddListener(GetBuildingInfo);
@@ -38,6 +38,7 @@ public class InformationPanelPresenter : MonoBehaviour
 
     private void GetBuildingInfo(object sender, ShowBuildingInfoEvent e)
     {
+        menu.SetActive(true);
         ClearData();
         buildingName.text = e.BuildName;
         ChangeActiveState(buildingImage, true);

@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class ScrollContent : MonoBehaviour
 {
-    #region Public Properties
-
-   
     public float ItemSpacing { get { return itemSpacing; } }
     public float HorizontalMargin { get { return horizontalMargin; } }
     public float VerticalMargin { get { return verticalMargin; } }
@@ -27,11 +24,8 @@ public class ScrollContent : MonoBehaviour
  
     public float ChildHeight { get { return childHeight; } }
 
-    #endregion
 
-    #region Private Members
 
-   
     private RectTransform rectTransform;
 
     
@@ -55,7 +49,7 @@ public class ScrollContent : MonoBehaviour
     [SerializeField]
     private bool horizontal, vertical;
 
-    #endregion
+ 
 
     private void Start()
     {
