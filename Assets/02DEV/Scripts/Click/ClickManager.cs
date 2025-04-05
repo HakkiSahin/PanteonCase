@@ -16,7 +16,8 @@ public class ClickManager : MonoBehaviour
             FireControler();
         }
     }
-
+        
+    //Do clicked objects have the ability to shoot 
     private void FireControler()
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -24,7 +25,6 @@ public class ClickManager : MonoBehaviour
 
         if (hit.collider != null)
         {
-            Debug.Log("in here Right");
             if (hit.transform.CompareTag("Build") || hit.transform.CompareTag("Soldier"))
             {
                 SoldierController.Instance.Fire(hit.transform.position);
@@ -33,6 +33,7 @@ public class ClickManager : MonoBehaviour
         }
     }
 
+    //Controlling IClickable interface within clicked objects
     private void ControlClickObject()
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

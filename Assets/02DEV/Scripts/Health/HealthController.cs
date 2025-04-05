@@ -9,10 +9,6 @@ public class HealthController : MonoBehaviour
 
     public bool IsDead => CurrentHealth <= 0;
 
-    // Olaylar
-    public event Action OnDeath;
-    public event Action<float> OnHealthChanged;
-
     private void Awake()
     {
         CurrentHealth = maxHealth;

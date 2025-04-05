@@ -12,7 +12,7 @@ public class ObjectPool : MonoBehaviour
     {
         Instance = this;
 
-        // Pool için Parentları sahnede oluşturuyoruz
+        // We create Parents for Pool on stage
         foreach (PoolType type in System.Enum.GetValues(typeof(PoolType)))
         {
             GameObject parentObj = new GameObject(type.ToString() + "_Pool");
