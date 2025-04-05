@@ -55,6 +55,7 @@ public class GridSystem : MonoBehaviour
     }
 
 
+   
     public Vector2 FindNearestCell(Vector2 position, Vector2 size)
     {  // FloorToInt kullanarak indeks al
         Vector2Int cellIdxInt = PositionToCellIndex(position);

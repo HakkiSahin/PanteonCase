@@ -3,45 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Pathfinding 
 {
-    #region Test
 
-    // private static Pathfinding _instance;
-    // public static Pathfinding Instance
-    // {
-    //     get
-    //     {
-    //         if (_instance == null)
-    //         {
-    //             _instance = new Pathfinding();
-    //         }
-    //         
-    //         return _instance;
-    //     }
-    // }
-    //
-    //
-    // private GridCells[,] _gridCells;
-    //
-    //
-    // public void SetGridCells(GridCells[,] gridCells)
-    // {
-    //     _gridCells = gridCells;
-    // }
-
-    #endregion 
-
-    
-    
-    
     private Cell[,] grid;
     private int gridWidth, gridHeight;
 
+    // Directions used for movement (including diagonals)
     private Vector2Int[] directions = new Vector2Int[]
     {
         new Vector2Int(0, 1), new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(-1, 0),
         new Vector2Int(1, 1), new Vector2Int(1, -1), new Vector2Int(-1, 1), new Vector2Int(-1, -1)
     };
 
+    // Constructor to initialize the grid and its dimensions
     public Pathfinding(Cell[,] grid, int width, int height)
     {
         this.grid = grid;
@@ -49,6 +22,7 @@ public class Pathfinding
         this.gridHeight = height;
     }
 
+    // Finds a path from start to target using A* algorithm
     public List<Cell> FindPath(Vector2Int start, Vector2Int target)
     {
         if (grid[target.x, target.y].GetFull()) return null;
@@ -67,6 +41,7 @@ public class Pathfinding
         {
             Vector2Int current = Dequeue(openSet);
 
+            // If target reached, build the path
             if (current == target)
                 return ReconstructPath(cameFrom, current);
 
@@ -81,6 +56,7 @@ public class Pathfinding
 
                 float tentativeGScore = gScore[current] + Vector2.Distance(current, neighbor);
 
+                // If new path to neighbor is better, or neighbor not evaluated yet
                 if (!gScore.ContainsKey(neighbor) || tentativeGScore < gScore[neighbor])
                 {
                     cameFrom[neighbor] = current;
@@ -94,6 +70,7 @@ public class Pathfinding
         return null;
     }
 
+    // Builds the path from target back to start using the cameFrom dictionary
     private List<Cell> ReconstructPath(Dictionary<Vector2Int, Vector2Int> cameFrom, Vector2Int current)
     {
         List<Cell> path = new List<Cell>();
@@ -107,16 +84,19 @@ public class Pathfinding
         path.Reverse();
         return path;
     }
+    // Checks if a position is within the grid bounds
     private bool IsInBounds(Vector2Int pos)
     {
         return pos.x >= 0 && pos.y >= 0 && pos.x < gridWidth && pos.y < gridHeight;
     }
 
+    // Heuristic function using Euclidean distance
     private float Heuristic(Vector2Int a, Vector2Int b)
     {
         return Vector2.Distance(a, b);
     }
 
+    // Adds a node to the open set with a priority
     private void Enqueue(SortedList<float, Queue<Vector2Int>> openSet, Vector2Int node, float priority)
     {
         if (!openSet.ContainsKey(priority))
@@ -124,7 +104,8 @@ public class Pathfinding
 
         openSet[priority].Enqueue(node);
     }
-
+    
+    // Retrieves and removes the node with the lowest priority
     private Vector2Int Dequeue(SortedList<float, Queue<Vector2Int>> openSet)
     {
         float firstKey = openSet.Keys[0];
