@@ -19,6 +19,6 @@ public class BuildCreateController : MonoBehaviour
     
     private void CreateBuild(object sender, CreateBuildEvent e)
     {
-        Debug.Log(e.BuildIndex +"e created");
+        Instantiate(buildings[0], Input.mousePosition, Quaternion.identity);
     }
 }
