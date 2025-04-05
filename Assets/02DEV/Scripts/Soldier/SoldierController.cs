@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SoldierController : Singleton<SoldierController>
@@ -18,6 +16,17 @@ public class SoldierController : Singleton<SoldierController>
             _currentSoldier.MovePosition(pos);
             _currentSoldier = null;
         }
-        
     }
+
+    public void Fire(Vector2 targetPosition)
+    {
+        Debug.unityLogger.Log(_currentSoldier + "   "+ targetPosition);
+        if (_currentSoldier != null)
+        {
+            _currentSoldier.Fire(targetPosition);
+            //_currentSoldier = null;
+        }
+    }
+
+    
 }

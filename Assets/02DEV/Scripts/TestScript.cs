@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using EventBus;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,16 +11,24 @@ public class TestScript : MonoBehaviour
     private Camera mainCamera;
     private bool isDragging = false;
     
-    public GridSystem gridSystem;
+    private GridSystem _gridSystem;
+    
     [SerializeField] Vector2 buildSize = new Vector2(4, 2);
     [SerializeField] SpriteRenderer buildRendere;
-    
     [SerializeField] Buildings buildings;
     
     private Vector2 _currentLocation;
+    
+    
     void Start()
     {
         mainCamera = Camera.main;
+        _gridSystem = FindObjectOfType<GridSystem>();
+    }
+
+    private void OnEnable()
+    {
+        isDragging = true;
     }
 
     private Rigidbody2D myRigid;
@@ -53,8 +63,8 @@ public class TestScript : MonoBehaviour
 
     private void FindNearestCell()
     {
-        transform.SetParent(gridSystem.transform);
-        Vector2 placementPos = gridSystem.FindNearestCell(transform.localPosition , buildSize);
+        transform.SetParent(_gridSystem.transform);
+        Vector2 placementPos = _gridSystem.FindNearestCell(transform.localPosition , buildSize);
 
         if (placementPos.x > -1)
         {
@@ -64,6 +74,7 @@ public class TestScript : MonoBehaviour
             
             _currentLocation = placementPos;
             transform.localPosition = _currentLocation;
+            EventBus<BuildPlacementEvent>.Emit(this.gameObject, new BuildPlacementEvent());
         }
         else
         {

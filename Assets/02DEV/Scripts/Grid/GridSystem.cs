@@ -38,9 +38,9 @@ public class GridSystem : MonoBehaviour
         DrawGrid();
       
     }
-    
-    
-    
+
+
+ 
 
     void DrawGrid()
     {

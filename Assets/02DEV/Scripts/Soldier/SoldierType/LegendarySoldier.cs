@@ -5,21 +5,29 @@ using UnityEngine;
 public class LegendarySoldier : MonoBehaviour,ISoldier, IClickable
 {
     public string SoldierName { get; set; }
+    public int SoldierDamage { get; set; }
     public Vector3 startPosition;
     public Vector2Int currentIndex;
     
     [SerializeField] private float moveSpeed=5f;
 
+  
+
     public Vector2Int CurrentPos { get; set; }
     public Pathfinding Pathfinding { get; set; }
-    
+    public HealthController HealthController { get; set; }
+    [SerializeField] private GameObject bulletPrefab;
+
     public void Initialize(GridSystem grid)
     {
         Pathfinding = new Pathfinding(grid.GridCells, grid.rows, grid.columns);
     }
 
+    public void GetHit(float damage)
+    {
+        HealthController.TakeDamage(damage);
+    }
 
-    [ContextMenu("Dead")]
     public void DeadSoldier()
     {
         ObjectPool.Instance.Return(gameObject, PoolType.Soldiers);
@@ -37,7 +45,7 @@ public class LegendarySoldier : MonoBehaviour,ISoldier, IClickable
 
         if (path != null)
         {
-            StartCoroutine(MoveAlongPath(transform, path, moveSpeed));
+            StartCoroutine(MoveAlongPath(transform, path, moveSpeed , target));
         }
         else
         {
@@ -54,8 +62,26 @@ public class LegendarySoldier : MonoBehaviour,ISoldier, IClickable
     {
         FollowPath(pos);
     }
+
+    public void Fire(Vector2 targetPosition)
+    {
+        
+        Debug.Log("firee");
+        GameObject bulletGO = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        BulletController bullet = bulletGO.GetComponent<BulletController>();
+
+        if (bullet != null)
+        {
+            bullet.Initialize(targetPosition, 5,transform);
+        }
+    }
     
-    IEnumerator MoveAlongPath(Transform unit, List<Cell> path, float speed)
+    public void OnEnemyDeath()
+    {
+        ObjectPool.Instance.Return(gameObject, PoolType.Soldiers);
+    }
+
+    IEnumerator MoveAlongPath(Transform unit, List<Cell> path, float speed , Vector2Int target)
     {
         foreach (Cell step in path)
         {
@@ -67,5 +93,12 @@ public class LegendarySoldier : MonoBehaviour,ISoldier, IClickable
                 yield return null; // Bir sonraki frame'e geç
             }
         }
+        
+        currentIndex = target;
+    }
+
+    public void OnFire()
+    {
+        throw new System.NotImplementedException();
     }
 }

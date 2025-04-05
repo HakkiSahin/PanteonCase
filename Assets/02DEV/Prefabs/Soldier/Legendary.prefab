@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2405023531736261925}
   - component: {fileID: 458800337853883226}
   - component: {fileID: 2238763377506600340}
+  - component: {fileID: -6689621338325765728}
   m_Layer: 0
   m_Name: Legendary
   m_TagString: Soldier
@@ -101,6 +102,7 @@ MonoBehaviour:
   startPosition: {x: 0, y: 0, z: 0}
   currentIndex: {x: 0, y: 0}
   moveSpeed: 5
+  bulletPrefab: {fileID: 7785860656336025477, guid: 2f616e8b9f0cd0c4b98ac3145fc58010, type: 3}
 --- !u!61 &2238763377506600340
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -127,3 +129,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.1418967, y: 7.1593757}
   m_EdgeRadius: 0
+--- !u!114 &-6689621338325765728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2405023531736261924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b342487738a2e7342a28ff41748f4dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10

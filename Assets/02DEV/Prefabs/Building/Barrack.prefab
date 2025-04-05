@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4597376900452833130}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.53, y: 0.15, z: 0}
+  m_LocalPosition: {x: 0.53, y: 0.5, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 761962495704956787}
   - component: {fileID: 4597376900941735181}
   - component: {fileID: 6681326168214153680}
+  - component: {fileID: -8073275756864134355}
   m_Layer: 0
   m_Name: Barrack
   m_TagString: Build
@@ -185,7 +186,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.52789503, y: 0.13649485}
+  m_Offset: {x: 0.52789503, y: 0.49}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -210,7 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3abbde9de9414d89ab5ca6f32178809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSystem: {fileID: 0}
   buildSize: {x: 4, y: 4}
   buildRendere: {fileID: 4597376900452833132}
   buildings: {fileID: 6681326168214153680}
@@ -235,3 +235,16 @@ MonoBehaviour:
   - {fileID: 21300000, guid: aad462d81e096451c82e24cf17993858, type: 3}
   - {fileID: 21300000, guid: e11ae823660cc412eb40cd4bd97a19c8, type: 3}
   testScript: {fileID: 4597376900941735181}
+--- !u!114 &-8073275756864134355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7852106608486113582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b342487738a2e7342a28ff41748f4dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10

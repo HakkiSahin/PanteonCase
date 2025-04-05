@@ -30,3 +30,9 @@ public struct CreateBuildEvent
 {
     public int BuildIndex;
 }
+
+
+public struct BuildPlacementEvent
+{
+    
+}

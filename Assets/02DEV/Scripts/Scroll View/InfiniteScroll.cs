@@ -6,9 +6,19 @@ using UnityEngine.UI;
 
 public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler, IScrollHandler
 {
-   
+    private void OnEnable()
+    {
+        EventBus<BuildPlacementEvent>.AddListener(BuildPlacement);
+    }
 
    
+
+    private void OnDisable()
+    {
+        EventBus<BuildPlacementEvent>.RemoveListener(BuildPlacement);
+    }
+
+
     [SerializeField] private ScrollContent scrollContent;
     [SerializeField] private float outOfBoundsThreshold;
     
@@ -65,7 +75,11 @@ public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler, IS
             _positiveDrag = eventData.scrollDelta.y < 0;
         }
     }
-
+    
+    private void BuildPlacement(object sender, BuildPlacementEvent @event)
+    {
+        _isCreate = false;
+    }
   
     public void OnViewScroll()
     {
@@ -123,6 +137,7 @@ public class InfiniteScroll : MonoBehaviour, IBeginDragHandler, IDragHandler, IS
 
     public void SelectedGrid(int index)
     {
+        Debug.Log("Selected Grid");
         _isCreate = false;
         _selectedIndex = index;
     }

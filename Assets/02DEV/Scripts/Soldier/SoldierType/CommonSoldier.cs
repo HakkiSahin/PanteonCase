@@ -5,16 +5,26 @@ using UnityEngine;
 public class CommonSoldier : MonoBehaviour, ISoldier, IClickable
 {
     public string SoldierName { get; set; }
+    public int SoldierDamage { get; set; } 
     [SerializeField] private float moveSpeed=5f;
 
     public Vector2Int currentIndex;
 
+   
     public Vector2Int CurrentPos { get; set; }
     
     public Pathfinding Pathfinding { get; set; }
-  
+    public HealthController HealthController { get; set; }
+    [SerializeField] private GameObject bulletPrefab;
+
 
     public Vector3 startPosition;
+
+    
+    public void OnEnemyDeath()
+    {
+        ObjectPool.Instance.Return(gameObject, PoolType.Soldiers);
+    }
 
   
     [ContextMenu("Dead")]
@@ -27,12 +37,29 @@ public class CommonSoldier : MonoBehaviour, ISoldier, IClickable
     {
         Pathfinding = new Pathfinding(grid.GridCells, grid.rows, grid.columns);
     }
-    
+
+    public void GetHit(float damage)
+    {
+        HealthController.TakeDamage(damage);
+    }
+
     public void MovePosition(Vector2Int pos)
     {
         FollowPath(pos);
     }
-    
+
+    public void Fire(Vector2 targetPosition)
+    {
+       
+        GameObject bulletGO = Instantiate(bulletPrefab, Vector3.zero, Quaternion.identity);
+        BulletController bullet = bulletGO.GetComponent<BulletController>();
+
+        if (bullet != null)
+        {
+            bullet.Initialize(targetPosition, 5,transform);
+        }
+    }
+
     [ContextMenu("Test Character")]
     public void FollowPath(Vector2Int target)
     {
@@ -45,7 +72,7 @@ public class CommonSoldier : MonoBehaviour, ISoldier, IClickable
 
         if (path != null)
         {
-            StartCoroutine(MoveAlongPath(transform, path, moveSpeed));
+            StartCoroutine(MoveAlongPath(transform, path, moveSpeed , target));
         }
         else
         {
@@ -58,7 +85,7 @@ public class CommonSoldier : MonoBehaviour, ISoldier, IClickable
         SoldierController.Instance.SelectedSoldier(this);
     }
     
-    IEnumerator MoveAlongPath(Transform unit, List<Cell> path, float speed)
+    IEnumerator MoveAlongPath(Transform unit, List<Cell> path, float speed , Vector2Int target)
     {
         foreach (Cell step in path)
         {
@@ -70,5 +97,12 @@ public class CommonSoldier : MonoBehaviour, ISoldier, IClickable
                 yield return null; // Bir sonraki frame'e geç
             }
         }
+        transform.position = new Vector3(transform.position.x, transform.position.y, -1);
+        currentIndex = target;
+    }
+
+    public void OnFire()
+    {
+        throw new System.NotImplementedException();
     }
 }

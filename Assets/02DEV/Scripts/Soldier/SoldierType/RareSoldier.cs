@@ -5,15 +5,31 @@ using UnityEngine;
 public class RareSoldier : MonoBehaviour, ISoldier, IClickable
 {
     public string SoldierName { get; set; }
+    public int SoldierDamage { get; set; }
     public Vector3 startPosition;
     public Vector2Int currentIndex;
+    
+    public void OnEnemyDeath()
+    {
+        ObjectPool.Instance.Return(gameObject, PoolType.Soldiers);
+    }
+
     public Vector2Int CurrentPos { get; set; }
     public Pathfinding Pathfinding { get; set; }
+    public HealthController HealthController { get; set; }
+    
+    [SerializeField] GameObject bulletPrefab;
+    
     [SerializeField] private float moveSpeed = 5f;
 
     public void Initialize(GridSystem grid)
     {
         Pathfinding = new Pathfinding(grid.GridCells, grid.rows, grid.columns);
+    }
+
+    public void GetHit(float damage)
+    {
+        throw new System.NotImplementedException();
     }
 
     [ContextMenu("Dead")]
@@ -34,7 +50,7 @@ public class RareSoldier : MonoBehaviour, ISoldier, IClickable
 
         if (path != null)
         {
-            StartCoroutine(MoveAlongPath(transform, path, moveSpeed));
+            StartCoroutine(MoveAlongPath(transform, path, moveSpeed , target));
         }
         else
         {
@@ -47,7 +63,19 @@ public class RareSoldier : MonoBehaviour, ISoldier, IClickable
         FollowPath(pos);
     }
 
-    IEnumerator MoveAlongPath(Transform unit, List<Cell> path, float speed)
+    public void Fire(Vector2 targetPosition)
+    {
+        Debug.Log("firee");
+        GameObject bulletGO = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        BulletController bullet = bulletGO.GetComponent<BulletController>();
+
+        if (bullet != null)
+        {
+            bullet.Initialize(targetPosition, 5,transform);
+        }
+    }
+
+    IEnumerator MoveAlongPath(Transform unit, List<Cell> path, float speed , Vector2Int target)
     {
         foreach (Cell step in path)
         {
@@ -59,10 +87,17 @@ public class RareSoldier : MonoBehaviour, ISoldier, IClickable
                 yield return null; // Bir sonraki frame'e geç
             }
         }
+
+        currentIndex = target;
     }
 
     public void OnClick()
     {
         SoldierController.Instance.SelectedSoldier(this);
+    }
+
+    public void OnFire()
+    {
+        throw new System.NotImplementedException();
     }
 }
